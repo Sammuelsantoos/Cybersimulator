@@ -1,3 +1,6 @@
+package model;
+
 public interface IRelatorioAuditavel {
-    String gerarLinhaAuditoria();
+    String gerarRegistroAuditoria();
+    String gerarRegistroAuditoria(double risco);
 }
