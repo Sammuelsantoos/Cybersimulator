@@ -10,7 +10,7 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel, 
     private LocalDateTime dataHora;
  
     private static final DateTimeFormatter FORMATTER =
-        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter.ofPattern("dd/mm/yyyy hh:mm:ss");
  
     private static boolean ipValido(String ip) {
         if (ip == null || ip.isBlank()) return false;
