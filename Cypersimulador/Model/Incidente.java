@@ -1,28 +1,58 @@
+// ======================== Importação de bibliotecas e declaração do package =========================
 package model;
- 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
- 
-public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel, ICalculavelRisco {
+
+// ==================================== Declaração da classe e seus atributos =========================
+
+public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel {
+    private String id;
     private String ipOrigem;
     private String ipDestino;
-    private int severidadeBase;
-    private LocalDateTime dataHora;
- 
+    private LocalDateTime timestamp;
+
+    
     private static final DateTimeFormatter FORMATTER =
-        DateTimeFormatter.ofPattern("dd/mm/yyyy hh:mm:ss");
- 
-    private static boolean ipValido(String ip) {
-        if (ip == null || ip.isBlank()) return false;
-        String[] partes = ip.split("\\.");
-        if (partes.length != 4) return false;
-        for (String parte : partes) {
-            try {
-                int valor = Integer.parseInt(parte);
-                if (valor < 0 || valor > 255) return false;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-        return true;
+        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
+// ============================ Validação dos IPs e inicialização dos atributos =======================
+
+    public Incidente(String id, String ipOrigem, String ipDestino) {
+        if (id == null || id.isBlank())
+            throw new IllegalArgumentException("O ID nao pode estar vazio. Tente novamente");
+        if (ipOrigem == null || ipOrigem.isBlank())
+            throw new IllegalArgumentException("IP de origem invalido.");
+        if (ipDestino == null || ipDestino.isBlank())
+            throw new IllegalArgumentException("IP de destino invalido.");
+
+        this.id = id;
+        this.ipOrigem = ipOrigem;
+        this.ipDestino = ipDestino;
+        this.timestamp = LocalDateTime.now();
     }
+
+// ============================================= Metodos Getters ======================================
+    public String getId() { 
+        return id; 
+    }
+
+    public String getIpOrigem() { 
+        return ipOrigem; 
+    }
+
+    public String getIpDestino() { 
+        return ipDestino; 
+    }
+
+    public LocalDateTime getTimestamp() { 
+        return timestamp; 
+    }
+
+    public String getTimestampFormatado() { 
+        return timestamp.format(FORMATTER);
+    }
+
+// ====================================== Utilização da IAcaoDefensiva =================================
+    public abstract void executarMitigacao();
+}
