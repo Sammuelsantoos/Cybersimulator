@@ -1,4 +1,5 @@
 // ======================== Importação de bibliotecas e declaração do package =========================
+
 package model;
 
 import java.time.LocalDateTime;
@@ -55,5 +56,6 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel{
     }
 
 // ====================================== Utilização da IAcaoDefensiva =================================
+    
     public abstract void executarMitigacao();
 }
