@@ -1,12 +1,12 @@
 package model;
 
 //================================= Declaracao da classe herdeira ==========================
-public class PortScan extends Incidente {
+public class PortScan extends Incidente{
     
     private static int idPS = 0;
     private int portasVarridas;
 
-    public PortScan(String ipOrigem, String ipDestino) {
+    public PortScan(String ipOrigem, String ipDestino){
         super("PS-" + (++idPS), ipOrigem, ipDestino);
         this.portasVarridas = 0;
     }
