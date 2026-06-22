@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 // ==================================== Declaração da classe e seus atributos =========================
 
-public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel {
+public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel{
     private String id;
     private String ipOrigem;
     private String ipDestino;
@@ -18,7 +18,7 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel {
 
 // ============================ Validação dos IPs e inicialização dos atributos =======================
 
-    public Incidente(String id, String ipOrigem, String ipDestino) {
+    public Incidente(String id, String ipOrigem, String ipDestino){
         if (id == null || id.isBlank())
             throw new IllegalArgumentException("O ID nao pode estar vazio. Tente novamente");
         if (ipOrigem == null || ipOrigem.isBlank())
@@ -33,23 +33,23 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel {
     }
 
 // ============================================= Metodos Getters ======================================
-    public String getId() { 
+    public String getId(){ 
         return id; 
     }
 
-    public String getIpOrigem() { 
+    public String getIpOrigem(){ 
         return ipOrigem; 
     }
 
-    public String getIpDestino() { 
+    public String getIpDestino(){ 
         return ipDestino; 
     }
 
-    public LocalDateTime getTimestamp() { 
+    public LocalDateTime getTimestamp(){ 
         return timestamp; 
     }
 
-    public String getTimestampFormatado() { 
+    public String getTimestampFormatado(){ 
         return timestamp.format(FORMATTER);
     }
 
