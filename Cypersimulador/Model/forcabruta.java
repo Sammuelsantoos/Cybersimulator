@@ -1,6 +1,7 @@
 package model;
 
 //================================= Declaracao da classe herdeira ==========================
+
 public class ForcaBruta extends Incidente{
 
     private static int idFB = 0;
@@ -12,6 +13,7 @@ public class ForcaBruta extends Incidente{
     }
     
 //============================ Consulta e incrementação do atributo ===========================
+    
     public int getTentativasFalhas(){ 
         return tentativasFalhas;
     }
@@ -21,6 +23,7 @@ public class ForcaBruta extends Incidente{
     }
 
 //================================= Implementação das intefaces ==============================
+    
     @Override
     public void executarMitigacao(){
         System.out.println("[ForcaBruta] Bloqueando IP suspeito: " + getIpOrigem()
