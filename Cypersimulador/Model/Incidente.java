@@ -33,6 +33,7 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel{
     }
 
 // ============================================= Metodos Getters ======================================
+    
     public String getId(){ 
         return id; 
     }
