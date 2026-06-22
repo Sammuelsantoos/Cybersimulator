@@ -10,7 +10,8 @@ public class ForcaBruta extends Incidente{
         super("FB-" + (++idFB), ipOrigem, ipDestino);
         this.tentativasFalhas = 0;
     }
-
+    
+//============================ Consulta e incrementação do atributo ===========================
     public int getTentativasFalhas(){ 
         return tentativasFalhas;
     }
