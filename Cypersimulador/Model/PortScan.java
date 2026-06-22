@@ -1,6 +1,7 @@
 package model;
 
 //================================= Declaracao da classe herdeira ==========================
+
 public class PortScan extends Incidente{
     
     private static int idPS = 0;
@@ -12,6 +13,7 @@ public class PortScan extends Incidente{
     }
 
 //============================ Consulta e incrementação do atributo ===========================
+    
     public int getPortasVarridas(){ 
         return portasVarridas; 
     }
@@ -21,6 +23,7 @@ public class PortScan extends Incidente{
     }
 
 //================================= Implementação das intefaces ==============================
+    
     @Override
     public void executarMitigacao(){
         System.out.println("  >> [PortScan] Ativando firewall para o IP: " + getIpOrigem()
