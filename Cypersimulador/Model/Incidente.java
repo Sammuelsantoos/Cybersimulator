@@ -4,6 +4,7 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 // ==================================== Declaração da classe e seus atributos =========================
 
@@ -27,7 +28,7 @@ public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel{
         if (ipDestino == null || ipDestino.isBlank())
             throw new IllegalArgumentException("IP de destino invalido.");
 
-        this.id = id;
+        this.id = UUID.randomUUID().toString().substring(0, 8);
         this.ipOrigem = ipOrigem;
         this.ipDestino = ipDestino;
         this.timestamp = LocalDateTime.now();
