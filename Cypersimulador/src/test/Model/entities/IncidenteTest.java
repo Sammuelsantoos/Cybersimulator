@@ -19,3 +19,9 @@ public class IncidenteTest {
         assertEquals("10.0.0.5", fb.getIpDestino());
         assertEquals(5, fb.getTentativasFalhas());
     }
+  @Test
+    public void deveLancarExcecaoParaIPOrigemInvalido() {
+        assertThrows(IpInvalidoException.class, () -> {
+            new ForcaBruta("999.999.999.999", "10.0.0.1");
+        });
+    }
