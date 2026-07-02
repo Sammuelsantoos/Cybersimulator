@@ -1,33 +1,47 @@
-package model.entities;
+package Model.entities;
 
-//================================= Declaracao da classe herdeira ==========================
-public class ForcaBruta extends Incidente{
+import Model.exceptions.IpInvalidoException;
+
+/**
+ * Representa um ataque de força bruta detectado.
+ * Monitora tentativas de login falhadas.
+ */
+public class ForcaBruta extends Incidente {
     private int tentativasFalhas;
 
-    public ForcaBruta(String ipOrigem, String ipDestino){
-        super("FB", ipOrigem, ipDestino);
-        this.tentativasFalhas = 0;
+    /**
+     * Construtor que cria um incidente de força bruta.
+     * 
+     * @param ipOrigem IP do atacante
+     * @param ipDestino IP do alvo
+     * @throws IpInvalidoException se algum IP for inválido
+     */
+    public ForcaBruta(String ipOrigem, String ipDestino) throws IpInvalidoException {
+        super(ipOrigem, ipDestino);
+        this.tentativasFalhas = 5;
     }
 
-    //============================ Consulta e incrementação do atributo ===========================
-    public int getTentativasFalhas(){ 
-        return tentativasFalhas; 
+    public int getTentativasFalhas() {
+        return tentativasFalhas;
     }
 
-    public void incrementarTentativas(){
-        this.tentativasFalhas++;
-    }
-
-    //================================= Implementação das intefaces ==============================
+    /**
+     * Ação de bloqueio do IP atacante no firewall.
+     */
     @Override
-    public void executarMitigacao(){
-        System.out.println("  >> [ForcaBruta] Bloqueando IP suspeito: " + getIpOrigem()
-             + ", tentativas falhas de acesso: "+ tentativasFalhas);
+    public void executarMitigacao() {
+        System.out.println("[MITIGAÇÃO] Bloqueando IP " + getIpOrigem() + 
+                " no Firewall. (Motivo: Força Bruta detectada)");
     }
 
+    /**
+     * Gera linha formatada para auditoria.
+     * 
+     * @return String com todos os detalhes do ataque
+     */
     @Override
-    public String gerarLinhaAuditoria(){
-        return String.format("[%s] ID: %s | TIPO: Forca Bruta | ORIGEM: %s | DESTINO: %s | NUM.TENTATIVAS: %d",
-            getTimestampFormatado(), getId(), getIpOrigem(), getIpDestino(), tentativasFalhas);
+    public String gerarLinhaAuditoria() {
+        return String.format("[%s] ID: %s | TIPO: Forca Bruta | ORIGEM: %s | DESTINO: %s | TENTATIVAS: %d",
+                getTimestampFormatado(), getId(), getIpOrigem(), getIpDestino(), tentativasFalhas);
     }
 }
