@@ -19,22 +19,32 @@ public class IncidenteTest {
         assertEquals("10.0.0.5", fb.getIpDestino());
         assertEquals(5, fb.getTentativasFalhas());
     }
-  @Test
+
+    @Test
     public void deveLancarExcecaoParaIPOrigemInvalido() {
         assertThrows(IpInvalidoException.class, () -> {
             new ForcaBruta("999.999.999.999", "10.0.0.1");
         });
     }
+
     @Test
     public void deveLancarExcecaoParaIPDestinoInvalido() {
         assertThrows(IpInvalidoException.class, () -> {
             new PortScan("192.168.1.1", "abc.def.ghi.jkl", 100);
         });
     }
-      @Test
+
+    @Test
     public void deveLancarExcecaoParaIPNulo() {
         assertThrows(IpInvalidoException.class, () -> {
             new ForcaBruta(null, "10.0.0.1");
+        });
+    }
+
+    @Test
+    public void deveLancarExcecaoParaIPVazio() {
+        assertThrows(IpInvalidoException.class, () -> {
+            new ForcaBruta("", "10.0.0.1");
         });
     }
 
@@ -44,7 +54,8 @@ public class IncidenteTest {
         assertNotNull(ps.getId());
         assertEquals(1024, ps.getPortasVarridas());
     }
-   @Test
+
+    @Test
     public void deveGerarLinhaAuditoriaForcaBruta() throws IpInvalidoException {
         ForcaBruta fb = new ForcaBruta("192.168.1.1", "10.0.0.5");
         String linha = fb.gerarLinhaAuditoria();
