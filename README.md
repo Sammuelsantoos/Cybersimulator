@@ -17,3 +17,7 @@ java -jar lib/junit-platform-console-standalone.jar --class-path bin --scan-clas
 **Para executar o programa**
 
 java -cp bin Main
+
+**Para gerar o JavaDoc**
+
+javadoc -d docs -sourcepath src/main -subpackages Model src/main/Main.java -encoding UTF-8 -charset UTF-8
