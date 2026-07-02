@@ -37,3 +37,10 @@ public class IncidenteTest {
             new ForcaBruta(null, "10.0.0.1");
         });
     }
+
+    @Test
+    public void deveCriarPortScanComIPsValidos() throws IpInvalidoException {
+        PortScan ps = new PortScan("172.16.0.1", "192.168.0.200", 1024);
+        assertNotNull(ps.getId());
+        assertEquals(1024, ps.getPortasVarridas());
+    }
