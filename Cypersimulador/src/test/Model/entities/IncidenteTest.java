@@ -31,3 +31,9 @@ public class IncidenteTest {
             new PortScan("192.168.1.1", "abc.def.ghi.jkl", 100);
         });
     }
+      @Test
+    public void deveLancarExcecaoParaIPNulo() {
+        assertThrows(IpInvalidoException.class, () -> {
+            new ForcaBruta(null, "10.0.0.1");
+        });
+    }
