@@ -44,3 +44,12 @@ public class IncidenteTest {
         assertNotNull(ps.getId());
         assertEquals(1024, ps.getPortasVarridas());
     }
+   @Test
+    public void deveGerarLinhaAuditoriaForcaBruta() throws IpInvalidoException {
+        ForcaBruta fb = new ForcaBruta("192.168.1.1", "10.0.0.5");
+        String linha = fb.gerarLinhaAuditoria();
+        assertTrue(linha.contains("Forca Bruta"));
+        assertTrue(linha.contains("192.168.1.1"));
+        assertTrue(linha.contains("10.0.0.5"));
+    }
+}
