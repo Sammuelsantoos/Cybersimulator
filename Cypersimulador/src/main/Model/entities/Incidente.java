@@ -1,64 +1,83 @@
-// ======================== Importação de bibliotecas e declaração do package =========================
-package model.entities;
-
-import model.interfaces.IAcaoDefensiva;
-import model.interfaces.IRelatorioAuditavel;
+package Model.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-// ==================================== Declaração da classe e seus atributos =========================
+import Model.exceptions.IpInvalidoException;
+import Model.interfaces.IAcaoDefensiva;
+import Model.interfaces.IRelatorioAuditavel;
 
-public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel{
+/**
+ * Classe abstrata que representa qualquer tipo de incidente de segurança.
+ * Implementa as interfaces de ação defensiva e auditoria.
+ */
+public abstract class Incidente implements IAcaoDefensiva, IRelatorioAuditavel {
     private String id;
     private String ipOrigem;
     private String ipDestino;
     private LocalDateTime timestamp;
 
-    private static final DateTimeFormatter FORMATTER =
-        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-// ============================ Validação dos IPs e inicialização dos atributos =======================
-
-    public Incidente(String prefixoId, String ipOrigem, String ipDestino){
-        if (prefixoId == null || prefixoId.trim().isEmpty())
-            throw new IllegalArgumentException("Prefixo do ID nao pode ser vazio.");
-        if (ipOrigem == null || ipOrigem.trim().isEmpty())
-            throw new IllegalArgumentException("IP de origem invalido.");
-        if (ipDestino == null || ipDestino.trim().isEmpty())
-            throw new IllegalArgumentException("IP de destino invalido.");
-
-        // Gera um ID dinamico e unico para o incidente, com prefixo por tipo
-        this.id = prefixoId + "-" + UUID.randomUUID().toString().substring(0, 8);
+    /**
+     * Construtor que valida IPs e gera ID único.
+     * 
+     * @param ipOrigem IP de onde partiu a ameaça
+     * @param ipDestino IP alvo da ameaça
+     * @throws IpInvalidoException se algum IP for inválido
+     */
+    public Incidente(String ipOrigem, String ipDestino) throws IpInvalidoException {
+        validarIp(ipOrigem);
+        validarIp(ipDestino);
+        
+        this.id = UUID.randomUUID().toString().substring(0, 8);
         this.ipOrigem = ipOrigem;
         this.ipDestino = ipDestino;
         this.timestamp = LocalDateTime.now();
     }
 
-// ============================================= Metodos Getters ======================================
-    
-    public String getId(){ 
+    /**
+     * Valida se o IP segue o padrão xxx.xxx.xxx.xxx com octetos entre 0-255.
+     * 
+     * @param ip Endereço IP a ser validado
+     * @throws IpInvalidoException se o IP for nulo, vazio ou inválido
+     */
+    private void validarIp(String ip) throws IpInvalidoException {
+        if (ip == null || ip.isBlank()) {
+            throw new IpInvalidoException("IP não pode ser nulo ou vazio.");
+        }
+        
+        String regex = "^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}" +
+                       "(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+        
+        if (!ip.matches(regex)) {
+            throw new IpInvalidoException("IP inválido: " + ip + ". Deve seguir o formato xxx.xxx.xxx.xxx");
+        }
+    }
+
+    public String getId() { 
         return id; 
     }
-
-    public String getIpOrigem(){ 
+    
+    public String getIpOrigem() { 
         return ipOrigem; 
     }
-
-    public String getIpDestino(){ 
+    
+    public String getIpDestino() { 
         return ipDestino; 
     }
-
-    public LocalDateTime getTimestamp(){ 
+    
+    public LocalDateTime getTimestamp() { 
         return timestamp; 
     }
 
-    public String getTimestampFormatado(){ 
-        return timestamp.format(FORMATTER); 
+    /**
+     * Retorna o timestamp formatado para exibição.
+     * 
+     * @return String no formato dd/MM/yyyy HH:mm:ss
+     */
+    public String getTimestampFormatado() {
+        return timestamp.format(FORMATTER);
     }
-
-// ====================================== Utilização da IAcaoDefensiva =================================
-    
-    public abstract void executarMitigacao();
 }
